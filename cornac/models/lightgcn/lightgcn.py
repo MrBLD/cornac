@@ -62,10 +62,11 @@ class GCNLayer(nn.Module):
 
 
 class Model(nn.Module):
-    def __init__(self, g, in_size, num_layers, lambda_reg):
+    def __init__(self, g, in_size, num_layers, lambda_reg, device=None):
         super(Model, self).__init__()
         self.norm_dict = dict()
         self.lambda_reg = lambda_reg
+        self.device = device
 
         self.layers = nn.ModuleList([GCNLayer() for _ in range(num_layers)])
 

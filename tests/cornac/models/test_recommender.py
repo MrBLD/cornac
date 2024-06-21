@@ -15,8 +15,6 @@
 
 import unittest
 
-import numpy as np
-
 from cornac.data import BasketDataset, Dataset, SequentialDataset, Reader
 from cornac.models import MF, GPTop, SPop, NextBasketRecommender, NextItemRecommender
 
@@ -87,10 +85,7 @@ class TestNextItemRecommender(unittest.TestCase):
         model.fit(dataset)
         model.score(0, [])
         result = model.rank(0, history_items=[])
-        self.assertTrue((result[0][0:3] == [3, 2, 4]).all())
-        self.assertTrue((np.sort(result[0][3:5]) == [0, 1]).all()) # identical scores, sorting may affect the ordering
-        self.assertTrue((result[0][5:6] == [5]).all())
-        self.assertTrue((np.sort(result[0][6:9]) == [6, 7, 8]).all()) # identical scores, sorting may affect the ordering
+        self.assertTrue((result[0] == [3, 2, 4, 1, 0, 5, 8, 7, 6]).all())
 
 
 if __name__ == "__main__":

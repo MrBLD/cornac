@@ -124,21 +124,21 @@ class LightGCN(Recommender, ANNMixin):
         from .lightgcn import Model
         from .lightgcn import construct_graph
 
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         if self.seed is not None:
             torch.manual_seed(self.seed)
             if torch.cuda.is_available():
                 torch.cuda.manual_seed_all(self.seed)
 
         graph = construct_graph(train_set, self.total_users, self.total_items).to(
-            device
+            self.device
         )
         model = Model(
             graph,
             self.emb_size,
             self.num_layers,
             self.lambda_reg,
-        ).to(device)
+        ).to(self.device)
 
         optimizer = torch.optim.Adam(model.parameters(), lr=self.learning_rate)
 
